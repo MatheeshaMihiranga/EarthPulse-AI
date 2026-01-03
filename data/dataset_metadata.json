@@ -1,0 +1,55 @@
+{
+  "dataset_name": "EarthPulse_Synthetic_Seismic_v1",
+  "description": "Synthetic seismic signals for elephant detection",
+  "num_classes": 7,
+  "classes": {
+    "0": "elephant_footfall",
+    "1": "human_footsteps",
+    "2": "cattle_movement",
+    "3": "wind_vibration",
+    "4": "rain_impact",
+    "5": "vehicle_passing",
+    "6": "background_noise"
+  },
+  "sampling_rate": 1000,
+  "signal_duration": 5.0,
+  "splits": {
+    "train": {
+      "num_samples": 700,
+      "samples_per_class": 100
+    },
+    "val": {
+      "num_samples": 210,
+      "samples_per_class": 30
+    },
+    "test": {
+      "num_samples": 210,
+      "samples_per_class": 30
+    }
+  },
+  "features": [
+    "rms",
+    "peak_to_peak",
+    "std",
+    "mean_abs",
+    "zero_crossing_rate",
+    "spectral_centroid",
+    "stft_mean_power",
+    "stft_max_power",
+    "low_freq_energy",
+    "high_freq_energy",
+    "freq_ratio",
+    "periodicity_period_seconds",
+    "periodicity_frequency_hz",
+    "periodicity_num_peaks",
+    "periodicity_max_correlation",
+    "envelope_mean",
+    "envelope_std",
+    "envelope_max"
+  ],
+  "soil_moisture_range": [
+    5,
+    40
+  ],
+  "generation_date": "2025-11-17T01:52:34.596451"
+}
