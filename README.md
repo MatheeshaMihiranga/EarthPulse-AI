@@ -137,83 +137,265 @@ EarthPulse-AI/
 
 ---
 
-## 🚀 Installation
+## 🚀 Installation & Complete Setup Guide
 
 ### Prerequisites
 
-- Python 3.11+
-- pip
+- **Python 3.11+** (Python 3.8+ also works but 3.11 recommended)
+- **pip** (Python package installer)
+- **Git** (for cloning the repository)
+- **4GB RAM minimum** (8GB recommended for training)
+- **2GB free disk space** (for datasets and models)
 
-### Setup
+### Step-by-Step Setup
+
+#### 1. Clone the Repository
 
 ```bash
-# Clone the repository
-cd /path/to/your/workspace
+# Clone from GitHub
+git clone https://github.com/MatheeshaMihiranga/EarthPulse-AI.git
 
 # Navigate to project directory
 cd EarthPulse-AI
+```
 
-# Install dependencies
+#### 2. Create Virtual Environment (Recommended)
+
+**Windows:**
+```bash
+# Create virtual environment
+python -m venv venv
+
+# Activate virtual environment
+venv\Scripts\activate
+```
+
+**Linux/Mac:**
+```bash
+# Create virtual environment
+python3 -m venv venv
+
+# Activate virtual environment
+source venv/bin/activate
+```
+
+#### 3. Install Dependencies
+
+```bash
+# Upgrade pip
+python -m pip install --upgrade pip
+
+# Install all required packages
 pip install -r requirements.txt
 ```
 
-### Requirements
+**Dependencies include:**
+- `numpy>=1.24.0` - Numerical computing
+- `scipy>=1.10.0` - Scientific computing
+- `matplotlib>=3.7.0` - Plotting
+- `pandas>=2.0.0` - Data manipulation
+- `scikit-learn>=1.3.0` - Machine learning utilities
+- `tensorflow>=2.13.0` - Deep learning framework
+- `keras>=2.13.0` - Neural network API
+- `seaborn>=0.12.0` - Statistical visualizations
+- `plotly>=5.14.0` - Interactive plots
+- `dash>=2.9.0` - Web dashboard
+- `dash-bootstrap-components>=2.0.0` - Dashboard styling
+- `tf2onnx>=1.14.0` - ONNX export
+- `tqdm>=4.67.0` - Progress bars
 
-```
-numpy>=1.24.0
-scipy>=1.10.0
-matplotlib>=3.7.0
-pandas>=2.0.0
-scikit-learn>=1.3.0
-tensorflow>=2.13.0
-keras>=2.13.0
-seaborn>=0.12.0
-plotly>=5.14.0
-dash>=2.9.0
-dash-bootstrap-components>=2.0.0
-tf2onnx>=1.14.0
-tqdm>=4.67.0
+#### 4. Verify Installation
+
+```bash
+# Test imports
+python -c "import tensorflow as tf; print('TensorFlow version:', tf.__version__)"
+python -c "import numpy as np; import scipy; import pandas as pd; print('Core libraries OK')"
 ```
 
 ---
 
-## 🎯 Quick Start
+## 🎯 Complete Training & Running Guide
 
-### 1. Generate Datasets
+### Step 1: Generate Synthetic Dataset
 
 ```bash
+# Generate complete dataset (train/val/test splits)
 python synthetic_generator/dataset_generator.py
 ```
 
-Generates 1,120 labeled samples (700 train, 210 val, 210 test) across 7 classes.
+**What this does:**
+- Generates **1,120 labeled samples** across 7 classes
+- Creates train (700), validation (210), and test (210) splits
+- Saves raw signals in `data/raw/`
+- Saves processed features in `data/processed/`
+- Creates CSV files: `train_dataset.csv`, `val_dataset.csv`, `test_dataset.csv`
+- Generates `dataset_metadata.json` with statistics
 
-### 2. Train LSTM Model
+**Expected time:** 5-10 minutes
+
+**Output structure:**
+```
+data/
+├── raw/                          # Raw seismic signals
+├── processed/                    # Processed features
+├── train_dataset.csv            # Training data paths
+├── val_dataset.csv              # Validation data paths
+├── test_dataset.csv             # Test data paths
+└── dataset_metadata.json        # Dataset statistics
+```
+
+### Step 2: Train the LSTM Model
 
 ```bash
+# Train model with default settings
 python models/lstm_classifier.py
 ```
 
-Trains model with early stopping, learning rate scheduling, and generates evaluation plots.
+**What this does:**
+- Loads preprocessed training and validation data
+- Builds LSTM neural network (2 LSTM layers + Dense layers)
+- Trains with early stopping and learning rate scheduling
+- Saves best model to `models/lstm_model.h5`
+- Generates quantized model: `models/lstm_model_quantized.tflite`
+- Exports ONNX format: `models/lstm_model.onnx`
+- Creates evaluation plots: `confusion_matrix.png`, `training_history.png`
+- Saves metrics to `models/model_card.json`
 
-### 3. Run Detection System Demo
+**Expected time:** 10-30 minutes (depends on CPU/GPU)
+
+**Training parameters:**
+- Epochs: 100 (with early stopping)
+- Batch size: 32
+- Learning rate: 0.001 (adaptive)
+- Optimizer: Adam
+
+**Expected performance:**
+- Test Accuracy: ~91%
+- Elephant Detection Recall: ~70%
+
+### Step 3: Test the Detection System
 
 ```bash
-python edge_firmware_simulated/detection_system.py
+# Run complete detection demo
+python test_elephant_detection.py
 ```
 
-Demonstrates complete detection pipeline with various scenarios.
+**What this does:**
+- Tests detection on various scenarios
+- Demonstrates multi-frame confirmation
+- Shows false positive suppression
+- Validates context-aware filtering
 
-### 4. Launch Real-Time Dashboard
+**Alternative tests:**
+```bash
+# Test jungle environment detection
+python test_jungle_detection.py
+
+# Test hardware connection (if available)
+python test_hardware_connection.py
+```
+
+### Step 4: Launch Real-Time Dashboard
 
 ```bash
+# Start interactive web dashboard
 python dashboard/realtime_dashboard.py
 ```
 
-Opens interactive dashboard at `http://localhost:8050`
+**What this does:**
+- Starts local web server on `http://localhost:8050`
+- Opens browser automatically
+- Displays live seismic waveforms
+- Shows FFT and STFT visualizations
+- Real-time detection status and alerts
+- Statistics and detection history
+
+**Dashboard features:**
+- Live signal streaming
+- Frequency analysis
+- Detection alerts
+- Historical data
+- Interactive controls
 
 ---
 
-## 🔧 Components
+## ⚡ Quick Start (All-in-One)
+
+Run everything in sequence:
+
+```bash
+# 1. Generate dataset
+python synthetic_generator/dataset_generator.py
+
+# 2. Train model
+python models/lstm_classifier.py
+
+# 3. Test detection
+python test_elephant_detection.py
+
+# 4. Launch dashboard
+python dashboard/realtime_dashboard.py
+```
+
+**Total time:** ~20-45 minutes (first-time setup)
+
+---
+
+## � Troubleshooting
+
+### Common Issues and Solutions
+
+#### Issue: TensorFlow Installation Fails
+
+**Solution:**
+```bash
+# For Windows with GPU
+pip install tensorflow[and-cuda]
+
+# For CPU only (faster install)
+pip install tensorflow-cpu
+
+# For older systems
+pip install tensorflow==2.13.0
+```
+
+#### Issue: "No module named 'xxx'" Error
+
+**Solution:**
+```bash
+# Reinstall all dependencies
+pip install -r requirements.txt --force-reinstall
+
+# Or install missing module individually
+pip install <module_name>
+```
+
+#### Issue: Out of Memory During Training
+
+**Solution:**
+- Reduce batch size in `models/lstm_classifier.py`
+- Close other applications
+- Use fewer training samples
+
+#### Issue: Dashboard Not Opening
+
+**Solution:**
+```bash
+# Check if port 8050 is available
+# Manually open browser to: http://localhost:8050
+# Or change port in dashboard/realtime_dashboard.py
+```
+
+#### Issue: Dataset Generation is Slow
+
+**Solution:**
+- This is normal; generation takes 5-10 minutes
+- Reduce sample count in `dataset_generator.py` for testing
+- Check CPU usage - should be near 100%
+
+---
+
+## �🔧 Components
 
 ### Synthetic Signal Generator
 
@@ -450,11 +632,11 @@ Contributions are welcome! Areas of interest:
 If you use this work in your research, please cite:
 
 ```bibtex
-@software{earthpulse_ai_2025,
+@software{earthpulse_ai_2026,
   title={EarthPulse AI: Elephant Seismic Detection System},
-  author={Your Name},
-  year={2025},
-  url={https://github.com/yourusername/EarthPulse-AI}
+  author={Matheesha Mihiranga},
+  year={2026},
+  url={https://github.com/MatheeshaMihiranga/EarthPulse-AI}
 }
 ```
 
@@ -478,8 +660,8 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 For questions, collaborations, or feedback:
 
-- **Email**: your.email@example.com
-- **Project Repository**: https://github.com/yourusername/EarthPulse-AI
+- **GitHub**: [@MatheeshaMihiranga](https://github.com/MatheeshaMihiranga)
+- **Project Repository**: https://github.com/MatheeshaMihiranga/EarthPulse-AI
 - **Documentation**: [Full Documentation](docs/)
 
 ---
@@ -488,7 +670,7 @@ For questions, collaborations, or feedback:
 
 **Current Version**: 1.0.0 (Research Prototype)
 
-**Last Updated**: November 2025
+**Last Updated**: January 2026
 
 **Status**: Active Development - Synthetic Data Phase Complete
 
