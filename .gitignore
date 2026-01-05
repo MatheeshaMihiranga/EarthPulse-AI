@@ -36,17 +36,12 @@ env/
 # VS Code
 .vscode/
 
-# Data files (large datasets)
-data/raw/*.npy
+# Data files (large datasets) - exclude all large datasets
+data/raw/
 data/processed/*.npy
-*.h5
-*.hdf5
 
-# Model files (keep lightweight versions only)
-models/*.h5
-models/*.tflite
-models/*.onnx
-!models/lstm_model_quantized.tflite
+# Include all model files for easy deployment
+# All model files are small enough to be tracked
 
 # Logs
 *.log
@@ -68,7 +63,7 @@ Thumbs.db
 *.index
 checkpoint
 
-# Training artifacts
-training_history.png
-confusion_matrix.png
-model_card.json
+# Training artifacts - keeping these for documentation
+# training_history.png
+# confusion_matrix.png
+# model_card.json

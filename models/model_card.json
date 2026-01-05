@@ -1,0 +1,178 @@
+{
+  "model_name": "EarthPulse_LSTM_v1",
+  "model_type": "LSTM Classifier",
+  "task": "Elephant Footfall Detection from Seismic Signals",
+  "num_classes": 7,
+  "architecture": {
+    "input_shape": [
+      18,
+      1
+    ],
+    "lstm_layers": 2,
+    "dense_layers": 1,
+    "output_activation": "softmax",
+    "total_parameters": 30983
+  },
+  "training": {
+    "dataset": "EarthPulse_Synthetic_Seismic_v1",
+    "train_samples": 700,
+    "val_samples": 210,
+    "test_samples": 210
+  },
+  "performance": {
+    "accuracy": 0.9095238095238095,
+    "confusion_matrix": [
+      [
+        16,
+        0,
+        14,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        1,
+        27,
+        0,
+        0,
+        0,
+        1,
+        1
+      ],
+      [
+        1,
+        0,
+        29,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        30,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        29,
+        0,
+        1
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        30,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        30
+      ]
+    ],
+    "classification_report": {
+      "elephant_footfall": {
+        "precision": 0.8888888888888888,
+        "recall": 0.5333333333333333,
+        "f1-score": 0.6666666666666666,
+        "support": 30.0
+      },
+      "human_footsteps": {
+        "precision": 1.0,
+        "recall": 0.9,
+        "f1-score": 0.9473684210526315,
+        "support": 30.0
+      },
+      "cattle_movement": {
+        "precision": 0.6744186046511628,
+        "recall": 0.9666666666666667,
+        "f1-score": 0.7945205479452054,
+        "support": 30.0
+      },
+      "wind_vibration": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1-score": 1.0,
+        "support": 30.0
+      },
+      "rain_impact": {
+        "precision": 1.0,
+        "recall": 0.9666666666666667,
+        "f1-score": 0.9830508474576272,
+        "support": 30.0
+      },
+      "vehicle_passing": {
+        "precision": 0.967741935483871,
+        "recall": 1.0,
+        "f1-score": 0.9836065573770492,
+        "support": 30.0
+      },
+      "background_noise": {
+        "precision": 0.9375,
+        "recall": 1.0,
+        "f1-score": 0.967741935483871,
+        "support": 30.0
+      },
+      "accuracy": 0.9095238095238095,
+      "macro avg": {
+        "precision": 0.9240784898605604,
+        "recall": 0.9095238095238095,
+        "f1-score": 0.9061364251404358,
+        "support": 210.0
+      },
+      "weighted avg": {
+        "precision": 0.9240784898605603,
+        "recall": 0.9095238095238095,
+        "f1-score": 0.9061364251404357,
+        "support": 210.0
+      }
+    }
+  },
+  "deployment": {
+    "target_device": "ESP32",
+    "quantization": "float16",
+    "format": "TensorFlow Lite"
+  },
+  "features": [
+    "rms",
+    "peak_to_peak",
+    "std",
+    "mean_abs",
+    "zero_crossing_rate",
+    "spectral_centroid",
+    "stft_mean_power",
+    "stft_max_power",
+    "low_freq_energy",
+    "high_freq_energy",
+    "freq_ratio",
+    "periodicity_period_seconds",
+    "periodicity_frequency_hz",
+    "periodicity_num_peaks",
+    "periodicity_max_correlation",
+    "envelope_mean",
+    "envelope_std",
+    "envelope_max"
+  ],
+  "preprocessing": {
+    "sampling_rate": 1000,
+    "bandpass_filter": "1-80 Hz",
+    "notch_filter": "50 Hz",
+    "normalization": "StandardScaler"
+  }
+}

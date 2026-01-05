@@ -162,6 +162,7 @@ cd EarthPulse-AI
 #### 2. Create Virtual Environment (Recommended)
 
 **Windows:**
+
 ```bash
 # Create virtual environment
 python -m venv venv
@@ -171,6 +172,7 @@ venv\Scripts\activate
 ```
 
 **Linux/Mac:**
+
 ```bash
 # Create virtual environment
 python3 -m venv venv
@@ -190,6 +192,7 @@ pip install -r requirements.txt
 ```
 
 **Dependencies include:**
+
 - `numpy>=1.24.0` - Numerical computing
 - `scipy>=1.10.0` - Scientific computing
 - `matplotlib>=3.7.0` - Plotting
@@ -224,6 +227,7 @@ python synthetic_generator/dataset_generator.py
 ```
 
 **What this does:**
+
 - Generates **1,120 labeled samples** across 7 classes
 - Creates train (700), validation (210), and test (210) splits
 - Saves raw signals in `data/raw/`
@@ -234,6 +238,7 @@ python synthetic_generator/dataset_generator.py
 **Expected time:** 5-10 minutes
 
 **Output structure:**
+
 ```
 data/
 ├── raw/                          # Raw seismic signals
@@ -252,6 +257,7 @@ python models/lstm_classifier.py
 ```
 
 **What this does:**
+
 - Loads preprocessed training and validation data
 - Builds LSTM neural network (2 LSTM layers + Dense layers)
 - Trains with early stopping and learning rate scheduling
@@ -264,12 +270,14 @@ python models/lstm_classifier.py
 **Expected time:** 10-30 minutes (depends on CPU/GPU)
 
 **Training parameters:**
+
 - Epochs: 100 (with early stopping)
 - Batch size: 32
 - Learning rate: 0.001 (adaptive)
 - Optimizer: Adam
 
 **Expected performance:**
+
 - Test Accuracy: ~91%
 - Elephant Detection Recall: ~70%
 
@@ -281,12 +289,14 @@ python test_elephant_detection.py
 ```
 
 **What this does:**
+
 - Tests detection on various scenarios
 - Demonstrates multi-frame confirmation
 - Shows false positive suppression
 - Validates context-aware filtering
 
 **Alternative tests:**
+
 ```bash
 # Test jungle environment detection
 python test_jungle_detection.py
@@ -303,6 +313,7 @@ python dashboard/realtime_dashboard.py
 ```
 
 **What this does:**
+
 - Starts local web server on `http://localhost:8050`
 - Opens browser automatically
 - Displays live seismic waveforms
@@ -311,6 +322,7 @@ python dashboard/realtime_dashboard.py
 - Statistics and detection history
 
 **Dashboard features:**
+
 - Live signal streaming
 - Frequency analysis
 - Detection alerts
@@ -348,6 +360,7 @@ python dashboard/realtime_dashboard.py
 #### Issue: TensorFlow Installation Fails
 
 **Solution:**
+
 ```bash
 # For Windows with GPU
 pip install tensorflow[and-cuda]
@@ -362,6 +375,7 @@ pip install tensorflow==2.13.0
 #### Issue: "No module named 'xxx'" Error
 
 **Solution:**
+
 ```bash
 # Reinstall all dependencies
 pip install -r requirements.txt --force-reinstall
@@ -373,6 +387,7 @@ pip install <module_name>
 #### Issue: Out of Memory During Training
 
 **Solution:**
+
 - Reduce batch size in `models/lstm_classifier.py`
 - Close other applications
 - Use fewer training samples
@@ -380,6 +395,7 @@ pip install <module_name>
 #### Issue: Dashboard Not Opening
 
 **Solution:**
+
 ```bash
 # Check if port 8050 is available
 # Manually open browser to: http://localhost:8050
@@ -389,6 +405,7 @@ pip install <module_name>
 #### Issue: Dataset Generation is Slow
 
 **Solution:**
+
 - This is normal; generation takes 5-10 minutes
 - Reduce sample count in `dataset_generator.py` for testing
 - Check CPU usage - should be near 100%
@@ -478,15 +495,15 @@ if result['detected'] and result['class_name'] == 'elephant_footfall':
 
 ### Class-Specific Performance
 
-| Class | Precision | Recall | F1-Score | Support |
-|-------|-----------|--------|----------|---------|
-| **Elephant Footfall** | **84.0%** | **70.0%** | **76.4%** | 30 |
-| Human Footsteps | 100.0% | 80.0% | 88.9% | 30 |
-| Cattle Movement | 75.7% | 93.3% | 83.6% | 30 |
-| Wind Vibration | 100.0% | 100.0% | 100.0% | 30 |
-| Rain Impact | 100.0% | 96.7% | 98.3% | 30 |
-| Vehicle Passing | 90.9% | 100.0% | 95.2% | 30 |
-| Background Noise | 93.8% | 100.0% | 96.8% | 30 |
+| Class                 | Precision | Recall    | F1-Score  | Support |
+| --------------------- | --------- | --------- | --------- | ------- |
+| **Elephant Footfall** | **84.0%** | **70.0%** | **76.4%** | 30      |
+| Human Footsteps       | 100.0%    | 80.0%     | 88.9%     | 30      |
+| Cattle Movement       | 75.7%     | 93.3%     | 83.6%     | 30      |
+| Wind Vibration        | 100.0%    | 100.0%    | 100.0%    | 30      |
+| Rain Impact           | 100.0%    | 96.7%     | 98.3%     | 30      |
+| Vehicle Passing       | 90.9%     | 100.0%    | 95.2%     | 30      |
+| Background Noise      | 93.8%     | 100.0%    | 96.8%     | 30      |
 
 ### Model Artifacts
 
@@ -549,7 +566,7 @@ system = ElephantDetectionSystem()
 # Process streaming data
 for signal_window in signal_stream:
     result = system.process_signal(signal_window, soil_moisture=current_moisture)
-    
+
     if result['detected'] and result['class_name'] == 'elephant_footfall':
         # Trigger alert
         send_alert_to_villagers()
@@ -577,6 +594,7 @@ Based on published research on elephant seismic communication and footfall signa
 ### TSTR Evaluation
 
 **Train on Synthetic, Test on Real** methodology:
+
 - Current: 91.4% on synthetic test set
 - Future: Validate on real geophone recordings
 
@@ -592,22 +610,26 @@ Based on published research on elephant seismic communication and footfall signa
 ## 🚧 Future Work
 
 ### Phase 1: Real Data Validation
+
 - [ ] Collect real elephant footfall recordings
 - [ ] Validate model on field data
 - [ ] Retrain with mixed synthetic + real data
 
 ### Phase 2: Hardware Implementation
+
 - [ ] Deploy on actual ESP32 + geophone
 - [ ] Field testing in elephant habitats
 - [ ] Power optimization
 
 ### Phase 3: System Integration
+
 - [ ] Multi-sensor fusion (acoustic + seismic)
 - [ ] Distributed sensor network
 - [ ] Cloud-based monitoring platform
 - [ ] Mobile app for villagers
 
 ### Phase 4: Advanced Features
+
 - [ ] Direction estimation (multiple sensors)
 - [ ] Speed and distance calculation
 - [ ] Number of individuals estimation
